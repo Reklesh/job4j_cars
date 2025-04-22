@@ -31,11 +31,6 @@ public class Car {
     @JoinColumn(name = "owner_id")
     private Owner owner;
 
-    @ManyToMany
-    @JoinTable(
-            name = "history_owner",
-            joinColumns = { @JoinColumn(name = "car_id") },
-            inverseJoinColumns = { @JoinColumn(name = "owner_id") }
-    )
-    private Set<Owner> owners = new HashSet<>();
+    @OneToMany(mappedBy = "car")
+    private Set<HistoryOwner> historyOwners;
 }
