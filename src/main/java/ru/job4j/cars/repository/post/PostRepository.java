@@ -11,9 +11,15 @@ public interface PostRepository {
 
     void update(Post post);
 
-    void delete(int postId);
+    boolean delete(int postId);
 
     List<Post> findAllOrderById();
 
     Optional<Post> findById(int postId);
+
+    List<Post> findByCreatedAfter();
+
+    List<Post> findAllWithPhotos();
+
+    List<Post> findByLikeCarBrand(String key);
 }

@@ -38,6 +38,16 @@ public class CrudRepository {
         run(command);
     }
 
+    public boolean execute(String query, Map<String, Object> args) {
+        Function<Session, Boolean> command = session -> {
+            var sq = session
+                    .createQuery(query);
+            args.forEach(sq::setParameter);
+            return sq.executeUpdate() > 0;
+        };
+        return tx(command);
+    }
+
     public <T> Optional<T> optional(String query, Class<T> cl, Map<String, Object> args) {
         Function<Session, Optional<T>> command = session -> {
             var sq = session
