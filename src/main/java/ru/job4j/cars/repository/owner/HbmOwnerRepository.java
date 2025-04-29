@@ -36,14 +36,24 @@ public class HbmOwnerRepository implements OwnerRepository {
 
     @Override
     public List<Owner> findAllOrderById() {
-        return crudRepository.query("from Owner order by id asc", Owner.class);
+        return crudRepository.query(
+                """
+                        SELECT DISTINCT o FROM Owner o
+                        LEFT JOIN FETCH o.historyOwners
+                        ORDER BY o.id
+                        """,
+                Owner.class);
     }
 
     @Override
     public Optional<Owner> findById(int ownerId) {
         return crudRepository.optional(
-                "from Owner where id = :fId", Owner.class,
-                Map.of("fId", ownerId)
-        );
+                """
+                        SELECT DISTINCT o FROM Owner o
+                        LEFT JOIN FETCH o.historyOwners
+                        WHERE o.id = :fId
+                        """,
+                Owner.class,
+                Map.of("fId", ownerId));
     }
 }

@@ -7,8 +7,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -29,9 +29,9 @@ public class Post {
     @JoinColumn(name = "auto_user_id")
     private User user;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     @JoinColumn(name = "auto_post_id")
-    private List<PriceHistory> priceHistories = new ArrayList<>();
+    private Set<PriceHistory> priceHistories = new HashSet<>();
 
     @ManyToMany
     @JoinTable(
@@ -39,13 +39,13 @@ public class Post {
             joinColumns = { @JoinColumn(name = "post_id") },
             inverseJoinColumns = { @JoinColumn(name = "user_id") }
     )
-    private List<User> participates = new ArrayList<>();
+    private Set<User> participates = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "car_id")
     private Car car;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     @JoinColumn(name = "post_id")
-    private List<File> photos = new ArrayList<>();
+    private Set<File> photos = new HashSet<>();
 }

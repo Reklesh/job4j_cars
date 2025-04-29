@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -26,5 +27,5 @@ public class Owner {
     private User user;
 
     @OneToMany(mappedBy = "owner")
-    private Set<HistoryOwner> historyOwners;
+    private Set<HistoryOwner> historyOwners = new HashSet<>();
 }

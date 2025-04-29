@@ -39,10 +39,10 @@ public class HbmPostRepository implements PostRepository {
         return crudRepository.query(
                 """
                         SELECT DISTINCT p FROM Post p
-                        JOIN FETCH p.priceHistories
-                        JOIN FETCH p.participates
-                        JOIN FETCH p.photos
-                        ORDER BY id ASC
+                        LEFT JOIN FETCH p.priceHistories
+                        LEFT JOIN FETCH p.participates
+                        LEFT JOIN FETCH p.photos
+                        ORDER BY p.id
                         """,
                 Post.class);
     }
@@ -52,10 +52,10 @@ public class HbmPostRepository implements PostRepository {
         return crudRepository.optional(
                 """
                         SELECT DISTINCT p FROM Post p
-                        JOIN FETCH p.priceHistories
-                        JOIN FETCH p.participates
-                        JOIN FETCH p.photos
-                        WHERE id = :fId
+                        LEFT JOIN FETCH p.priceHistories
+                        LEFT JOIN FETCH p.participates
+                        LEFT JOIN FETCH p.photos
+                        WHERE p.id = :fId
                         """,
                 Post.class,
                 Map.of("fId", postId));
@@ -66,10 +66,10 @@ public class HbmPostRepository implements PostRepository {
         return crudRepository.query(
                 """
                         SELECT DISTINCT p FROM Post p
-                        JOIN FETCH p.priceHistories
-                        JOIN FETCH p.participates
-                        JOIN FETCH p.photos
-                        WHERE created > :fCreated
+                        LEFT JOIN FETCH p.priceHistories
+                        LEFT JOIN FETCH p.participates
+                        LEFT JOIN FETCH p.photos
+                        WHERE p.created > :fCreated
                         ORDER BY p.id
                         """,
                 Post.class,
@@ -81,9 +81,9 @@ public class HbmPostRepository implements PostRepository {
         return crudRepository.query(
                 """
                         SELECT DISTINCT p FROM Post p
-                        JOIN FETCH p.priceHistories
-                        JOIN FETCH p.participates
-                        JOIN FETCH p.photos
+                        LEFT JOIN FETCH p.priceHistories
+                        LEFT JOIN FETCH p.participates
+                        LEFT JOIN FETCH p.photos
                         WHERE SIZE(p.photos) > 0
                         ORDER BY p.id
                         """,
@@ -95,9 +95,9 @@ public class HbmPostRepository implements PostRepository {
         return crudRepository.query(
                 """
                         SELECT DISTINCT p FROM Post p
-                        JOIN FETCH p.priceHistories
-                        JOIN FETCH p.participates
-                        JOIN FETCH p.photos
+                        LEFT JOIN FETCH p.priceHistories
+                        LEFT JOIN FETCH p.participates
+                        LEFT JOIN FETCH p.photos
                         WHERE p.car.name like :fKey
                         """,
                 Post.class,

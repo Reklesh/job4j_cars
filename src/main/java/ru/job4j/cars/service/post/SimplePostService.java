@@ -10,6 +10,7 @@ import ru.job4j.cars.service.file.FileService;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,10 +27,10 @@ public class SimplePostService implements PostService {
         return postRepository.create(post);
     }
 
-    private List<File> saveNewFile(List<FileDto> images) {
+    private Set<File> saveNewFile(List<FileDto> images) {
         return images.stream()
                 .map(fileService::save)
-                .toList();
+                .collect(Collectors.toSet());
     }
 
     @Override

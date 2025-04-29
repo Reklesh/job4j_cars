@@ -36,14 +36,24 @@ public class HbmCarRepository implements CarRepository {
 
     @Override
     public List<Car> findAllOrderById() {
-        return crudRepository.query("from Car order by id asc", Car.class);
+        return crudRepository.query(
+                """
+                        SELECT DISTINCT c FROM Car c
+                        LEFT JOIN FETCH c.historyOwners
+                        ORDER BY c.id
+                        """,
+                Car.class);
     }
 
     @Override
     public Optional<Car> findById(int carId) {
         return crudRepository.optional(
-                "from Car where id = :fId", Car.class,
-                Map.of("fId", carId)
-        );
+                """
+                        SELECT DISTINCT c FROM Car c
+                        LEFT JOIN FETCH c.historyOwners
+                        WHERE c.id = :fId
+                        """,
+                Car.class,
+                Map.of("fId", carId));
     }
 }
